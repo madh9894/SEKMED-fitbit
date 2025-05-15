@@ -10,15 +10,15 @@ app.config.from_object(Config)
 
 CORS(app)
 
-@app.route('/', methods=['GET'])
+@app.route('/')
 def home():
     return jsonify({"message": "Fitbit API Backend. Use /authorize to begin."})
 
-@app.route('/authorize', methods=['GET'])
+@app.route('/authorize')
 def authorize():
     return redirect(authorize_user())
 
-@app.route('/callback', methods=['GET'])
+@app.route('/callback')
 def callback():
     error = request.args.get('error')
     if error:
@@ -31,12 +31,13 @@ def callback():
     try:
         tokens = get_token(auth_code)
         access_token = tokens['access_token']
-        # redirect to frontend with access token in query param
-        return redirect(f"{Config.FRONTEND_URL}/dashboard?token={access_token}")
+        # Redirect to frontend with access token in query param
+        # Update this URL to your Vercel frontend URL in production
+        return redirect(f"https://your-frontend-app.vercel.app/dashboard?token={access_token}")
     except Exception as e:
         return jsonify({"error": str(e)})
 
-@app.route('/api/data/<data_type>', methods=['GET'])
+@app.route('/api/data/<data_type>')
 def get_data(data_type):
     access_token = request.headers.get('Authorization')
     if not access_token:
@@ -52,5 +53,12 @@ def get_data(data_type):
     except Exception as e:
         return jsonify({"error": str(e)})
 
-# This is needed for Vercel serverless functions
-app.debug = True
+# This is for local development
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)
+
+# Handler for Vercel serverless function
+from http.server import BaseHTTPRequestHandler
+
+def handler(event, context):
+    return app(event, context)
