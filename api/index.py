@@ -3,6 +3,7 @@ from config import Config
 from utils.auth import authorize_user, get_token
 from utils.data import fetch_fitbit_data
 from flask_cors import CORS
+import os
 
 app = Flask(__name__)
 app.secret_key = Config.SECRET_KEY
@@ -31,9 +32,12 @@ def callback():
     try:
         tokens = get_token(auth_code)
         access_token = tokens['access_token']
-        # Redirect to frontend with access token in query param
-        # Update this URL to your Vercel frontend URL in production
-        return redirect(f"https://your-frontend-app.vercel.app/dashboard?token={access_token}")
+        
+        # Get frontend URL from environment or use default for local development
+        frontend_url = os.environ.get('FRONTEND_URL', 'http://localhost:3000')
+        
+        # Redirect to frontend with access token
+        return redirect(f"{frontend_url}/dashboard?token={access_token}")
     except Exception as e:
         return jsonify({"error": str(e)})
 
