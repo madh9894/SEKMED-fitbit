@@ -13,12 +13,11 @@ frontend_url = os.environ.get("FRONTEND_URL", "http://localhost:3000")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[frontend_url, "http://localhost:3000"],  # Allow both production and localhost
+    allow_origins=[frontend_url, "http://localhost:3000", "https://sekmed-fitbit2.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 @app.get("/")
 async def home():
     return {"message": "Fitbit API Backend. Use /authorize to begin."}
