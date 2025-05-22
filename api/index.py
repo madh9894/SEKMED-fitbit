@@ -29,6 +29,13 @@ async def authorize():
     auth_url = authorize_user()
     return RedirectResponse(auth_url)
 
+# Make sure the route is also available at /api/authorize
+@app.get("/api/authorize")
+async def api_authorize():
+    """Redirect to Fitbit authorization page (API route)"""
+    auth_url = authorize_user()
+    return RedirectResponse(auth_url)
+
 @app.get("/callback")
 async def callback(code: Optional[str] = None, error: Optional[str] = None):
     """Handle OAuth callback from Fitbit"""
@@ -44,6 +51,12 @@ async def callback(code: Optional[str] = None, error: Optional[str] = None):
         return RedirectResponse(f"{frontend_url}/home?token={access_token}&view=vital")
     except Exception as e:
         return RedirectResponse(f"{frontend_url}/home?error={str(e)}")
+
+# Also make callback available at /api/callback
+@app.get("/api/callback")
+async def api_callback(code: Optional[str] = None, error: Optional[str] = None):
+    """Handle OAuth callback from Fitbit (API route)"""
+    return await callback(code, error)
 
 @app.get("/api/data/{data_type}")
 async def get_data(
