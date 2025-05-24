@@ -10,7 +10,7 @@ from utils.data import fetch_fitbit_data
 app = FastAPI(title="Fitbit API Backend")
 
 # Configure CORS with environment variable for production and localhost for development
-frontend_url = os.environ.get("FRONTEND_URL", "http://localhost:3000")
+frontend_url = os.environ.get("FRONTEND_URL", "https://sekmed.vercel.app")
 
 app.add_middleware(
 
