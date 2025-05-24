@@ -9,7 +9,7 @@ class Config:
     CLIENT_SECRET = os.environ.get('FITBIT_CLIENT_SECRET', '4112a6a244bf91db710ff2580f2be515')
     
     # Use environment variables for URLs in production
-    REDIRECT_URI = os.environ.get('REDIRECT_URI', 'http://localhost:5000/callback')
+    REDIRECT_URI = os.environ.get('REDIRECT_URI', 'https://sekmed.vercel.app/callback')
     FRONTEND_URL = os.environ.get('FRONTEND_URL', 'https://sekmed.vercel.app')
     
     # Fitbit API endpoints
