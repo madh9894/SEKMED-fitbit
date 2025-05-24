@@ -6,6 +6,7 @@ import os
 from utils.auth import authorize_user, get_token
 from utils.data import fetch_fitbit_data
 
+
 app = FastAPI(title="Fitbit API Backend")
 
 # Configure CORS with environment variable for production and localhost for development
@@ -13,7 +14,7 @@ frontend_url = os.environ.get("FRONTEND_URL", "http://localhost:3000")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[frontend_url, "http://localhost:3000", "https://sekmed-fitbit2.vercel.app"],
+    allow_origins=[frontend_url, "http://localhost:3000", "https://sekmed-fitbit2.vercel.app", "https://sekmed.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -88,6 +89,7 @@ async def get_data(
             "steps": "steps",
             "calories": "calories",
             "activity_summary": "activity_summary"
+
         }
         backend_data_type = type_mapping.get(data_type, data_type)
 
