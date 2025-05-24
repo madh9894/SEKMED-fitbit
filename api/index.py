@@ -13,6 +13,7 @@ app = FastAPI(title="Fitbit API Backend")
 frontend_url = os.environ.get("FRONTEND_URL", "http://localhost:3000")
 
 app.add_middleware(
+
     CORSMiddleware,
     allow_origins=[frontend_url, "http://localhost:3000", "https://sekmed-fitbit2.vercel.app", "https://sekmed.vercel.app"],
     allow_credentials=True,
