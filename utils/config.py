@@ -10,7 +10,7 @@ class Config:
 
 
     # Use environment variables for URLs in production
-    REDIRECT_URI = os.environ.get('REDIRECT_URI', 'https://sekmed.vercel.app/callback')
+    REDIRECT_URI = os.environ.get('REDIRECT_URI', 'https://sekmed-fitbit2.vercel.app/callback')
     FRONTEND_URL = os.environ.get('FRONTEND_URL', 'https://sekmed.vercel.app')
     
     # Fitbit API endpoints
